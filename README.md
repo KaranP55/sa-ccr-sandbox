@@ -1,6 +1,11 @@
 What the Prototype Simplifies (The Gaps)
+
 	Intra-Asset Class Aggregation (Maturity Buckets): Right now, the script assumes a flat sum of trade add-ons (Trade_Addon). In official Basel rules, Interest Rate trades must be sorted into three distinct maturity buckets (<1 yr, 1"--" 5 yrs, >5 yrs) where long and short positions offset within buckets, and partial correlations apply across adjacent buckets.
+	
 	Cross-Asset Class Correlation Matrices: If a single Netting Set contains both Interest Rates and Foreign Exchange, our script currently sums their add-ons together linearly. The official SA-CCR formula requires combining different asset classes using a specific correlation matrix (applying exact regulatory correlation weights, such as a 50% correlation factor between certain classes).
+	
 	Options and Non-Linear Products: Our code hardcodes "Supervisory Delta": 1.0. In reality, options (swaptions, caps, floors, equity options) require complex Black-Scholes supervisory delta formulas that factor in strikes, spot prices, volatilities, and option types.
+	
 	Collateral Haircuts (SFTs & Non-Cash Collateral): Our prototype treats collateral as a clean cash-equivalent deduction. In practice, if a counterparty posts non-cash collateral (like corporate bonds or equities), the engine must apply regulatory collateral haircuts to discount their value.
+	
 	Index Decomposition: If a trade references an index (like the S&P 500 or iTraxx Europe), SA-CCR requires breaking down the index into single-name constituents or applying specific index look-through rules.
